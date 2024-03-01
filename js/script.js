@@ -9,7 +9,7 @@ var canvasHeight;
 var canvasWidth;
 var tankHeight = 10;
 var tankWidth = 20;
-var tankInitialX = 50;
+var tankX = 50;
 
 function start(){
     // Get the canvas element
@@ -19,15 +19,6 @@ function start(){
     // make canvas background black
     canvas.style.backgroundColor = 'black';
 
-
-    drawTerrain();
-    drawTank(tankInitialX);
-    drawTank(canvasWidth-tankInitialX);
-    console.log(terrainFunction(50));
-
-}
-
-function drawTerrain(){
     // Get the canvas width and height
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
@@ -37,6 +28,18 @@ function drawTerrain(){
     frequency2 = randomFloat(0, 0.01);
     phase = randomFloat(0, 2 * Math.PI);
     phase2 = randomFloat(0, 2 * Math.PI);
+
+
+    drawTerrain();
+    drawTank(tankX);
+    //drawTank(canvasWidth-tankInitialX);
+    //console.log(terrainFunction(50));
+
+}
+
+
+function drawTerrain(){
+
 
 
 
@@ -86,4 +89,29 @@ function slopeToAngle(slope){
 function randomFloat(min, max){
     return Math.random() * (max - min) + min;
 }
+
+
+// Key press event listener
+document.addEventListener('keydown', function(event){
+    if (event.key == "ArrowRight"){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawTerrain();
+        drawTank(tankX + 5);
+    }
+    else if (event.key == "ArrowLeft"){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawTerrain();
+        drawTank(tankX - 5);
+    }
+    else if (event.key == "ArrowUp"){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawTerrain();
+        drawTank(tankX);
+    }
+    else if (event.key == "ArrowDown"){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawTerrain();
+        drawTank(tankX);
+    }
+});
 
