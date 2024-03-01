@@ -9,6 +9,7 @@ var canvasHeight;
 var canvasWidth;
 var tankHeight = 10;
 var tankWidth = 20;
+var tankInitialX = 50;
 
 function start(){
     // Get the canvas element
@@ -20,7 +21,8 @@ function start(){
 
 
     drawTerrain();
-    drawTank(50);
+    drawTank(tankInitialX);
+    drawTank(canvasWidth-tankInitialX);
     console.log(terrainFunction(50));
 
 }
@@ -65,6 +67,7 @@ function drawTank(x ){
     context.rotate(-slopeToAngle(slopeFunction(x)));
     context.translate(-x, -terrainFunction(x));
     context.fillRect(x-(tankWidth/2), terrainFunction(x)-tankHeight, tankWidth, tankHeight);
+    context.setTransform(1, 0, 0, 1, 0, 0);
     
 }
 
