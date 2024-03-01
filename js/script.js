@@ -40,10 +40,6 @@ function start(){
 
 function drawTerrain(){
 
-
-
-
-
     for (let i = 0; i < canvasWidth; i++){
         // i\sin\left(hx+k\right)\cos\left(lx\right)
         var y = terrainFunction(i);
@@ -90,18 +86,24 @@ function randomFloat(min, max){
     return Math.random() * (max - min) + min;
 }
 
+function getTankY(x){
+    return terrainFunction(x);
+}
+
 
 // Key press event listener
 document.addEventListener('keydown', function(event){
     if (event.key == "ArrowRight"){
         context.clearRect(0, 0, canvas.width, canvas.height);
         drawTerrain();
-        drawTank(tankX + 5);
+        tankX++;
+        drawTank(tankX);
     }
     else if (event.key == "ArrowLeft"){
         context.clearRect(0, 0, canvas.width, canvas.height);
         drawTerrain();
-        drawTank(tankX - 5);
+        tankX--;
+        drawTank(tankX);
     }
     else if (event.key == "ArrowUp"){
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -115,3 +117,37 @@ document.addEventListener('keydown', function(event){
     }
 });
 
+
+
+// Physics of the projectile
+var gravity = 9.8;
+var initialVelocity = 10;
+var angle = 0;
+var time = 0;
+var x = 0;
+var y = 0;
+var velocity = 0;
+
+function spawnProjectile(){
+    x = tankX;
+    y = terrainFunction(tankX);
+    angle = 45;
+    velocity = initialVelocity;
+    time = 0;
+    console.log("Projectile Spawned");
+}
+
+function updateProjectile(){
+    x = tankX + velocity * Math.cos(angle) * time;
+    y = terrainFunction(x) + velocity * Math.sin(angle) * time - 0.5 * gravity * time * time;
+    time += 0.1;
+    console.log("Projectile Updated");
+}
+
+function drawProjectile(){
+    context.fillStyle = 'red';
+    context.beginPath();
+    context.arc(x, y, 5, 0, 2 * Math.PI);
+    context.fill();
+    console.log("Projectile Drawn");
+}
