@@ -110,9 +110,9 @@ document.addEventListener('keydown', function(event){
 
 
 // Physics of the projectile
-var gravity = -9.8;
-var initialVelocity = -100;
-var angle = 0;
+var gravity = 9.8;
+var initialVelocity = -50;
+var angle = 45;
 var time = 0;
 var x = 0;
 var y = 0;
@@ -120,15 +120,20 @@ var velocity = 0;
 
 function spawnProjectile(){
     x = tankX;
-    y = terrainFunction(tankX)+tankHeight;
-    angle = 145 * Math.PI / 180;
+    y = terrainFunction(tankX)-tankHeight;
     velocity = initialVelocity;
     time = 0;
+
     console.log("Projectile Spawned");
 }
 
 function updateProjectile(){
-    drawProjectile();
+    time += 1;
+    x += velocity * Math.cos(angle);
+    y += (velocity * Math.sin(angle) * time + (0.5 * gravity * Math.pow(time, 2)))/100;
+    //if(y < terrainFunction(x)){
+        drawProjectile();
+    //}
     console.log("Projectile Updated");
 }
 
@@ -145,6 +150,20 @@ function drawProjectile(){
 document.addEventListener('keydown', function(event){
     if (event.key == " "){
         spawnProjectile();
-        setInterval(updateProjectile, 100);
+        setInterval(updateProjectile, 1);
     }
 });
+
+function inputAngleToRadian(angle){
+    return (angle);
+}
+
+function angleChange(angleInput){
+    angle = inputAngleToRadian(angleInput);
+    document.getElementById('angleValue').innerHTML = angleInput;
+}
+
+function powerChange(velocityInput){
+    initialVelocity = -1*velocityInput;
+    document.getElementById('powerValue').innerHTML = velocityInput;
+}

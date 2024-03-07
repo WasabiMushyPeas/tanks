@@ -10,6 +10,13 @@
     <body onload="start()">
         <!-- make a canvas -->
         <canvas id="canvas" width="1200" height="600"></canvas>
-
+        <!-- make an angle slider -->
+        <input type="range" id="angle" min="0" max="90" value="45"
+            oninput="angleChange(this.value)">
+        <span id="angleValue">45</span>
+        <!-- make a power slider -->
+        <input type="range" id="power" min="0" max="100" value="50"
+            oninput="powerChange(this.value)">
+        <span id="powerValue">50</span>
     </body>
 </html>
