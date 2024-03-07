@@ -105,23 +105,13 @@ document.addEventListener('keydown', function(event){
         tankX--;
         drawTank(tankX);
     }
-    else if (event.key == "ArrowUp"){
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        drawTerrain();
-        drawTank(tankX);
-    }
-    else if (event.key == "ArrowDown"){
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        drawTerrain();
-        drawTank(tankX);
-    }
 });
 
 
 
 // Physics of the projectile
-var gravity = 9.8;
-var initialVelocity = 10;
+var gravity = -9.8;
+var initialVelocity = -100;
 var angle = 0;
 var time = 0;
 var x = 0;
@@ -130,8 +120,8 @@ var velocity = 0;
 
 function spawnProjectile(){
     x = tankX;
-    y = terrainFunction(tankX);
-    angle = 45;
+    y = terrainFunction(tankX)+tankHeight;
+    angle = 145 * Math.PI / 180;
     velocity = initialVelocity;
     time = 0;
     console.log("Projectile Spawned");
@@ -141,6 +131,7 @@ function updateProjectile(){
     x = tankX + velocity * Math.cos(angle) * time;
     y = terrainFunction(x) + velocity * Math.sin(angle) * time - 0.5 * gravity * time * time;
     time += 0.1;
+    drawProjectile();
     console.log("Projectile Updated");
 }
 
@@ -151,3 +142,12 @@ function drawProjectile(){
     context.fill();
     console.log("Projectile Drawn");
 }
+
+
+// When space is pressed, spawn a projectile and start the update loop
+document.addEventListener('keydown', function(event){
+    if (event.key == " "){
+        spawnProjectile();
+        setInterval(updateProjectile, 100);
+    }
+});
