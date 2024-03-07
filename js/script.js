@@ -128,9 +128,6 @@ function spawnProjectile(){
 }
 
 function updateProjectile(){
-    x = tankX + velocity * Math.cos(angle) * time;
-    y = terrainFunction(x) + velocity * Math.sin(angle) * time - 0.5 * gravity * time * time;
-    time += 0.1;
     drawProjectile();
     console.log("Projectile Updated");
 }
